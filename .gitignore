@@ -1,0 +1,28 @@
+.*
+!.gitignore
+
+#Idea file         #
+####################
+**/*.iml
+*.iml
+
+# Editor Files #
+################
+*~
+*.swp
+*.log
+*.jar
+*.exe
+
+
+out/
+target/
+build/
+bin/
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db

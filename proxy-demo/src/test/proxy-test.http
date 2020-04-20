@@ -1,0 +1,40 @@
+GET localhost:7070/api/hello
+Accept: application/json
+
+> {%
+client.test("Request success", function() {
+  client.assert(response.body["text"] === "hello", "expected hello but "+response.body["text"]);
+});
+
+
+%}
+
+
+###
+GET localhost:7070/api/delay
+Accept: application/json
+
+> {%
+ client.test("Response success ", function() {
+  var type = response.contentType.mimeType;
+  client.assert(response.body["text"] === "delay", "Expected delay  but " + response.body["text"]);
+});
+
+ %}
+
+###
+POST localhost:7070/api/query
+Content-Type: application/json
+
+{
+  "name": "abc",
+  "value": 134
+}
+
+> {%
+ client.test("Response success ", function() {
+  client.assert(response.body["result"] === "result", "Expected result  but " + response.body["result"]);
+  client.assert(response.body["name"] === "abc", "Expected abc  but " + response.body["name"])
+});
+
+ %}
