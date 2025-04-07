@@ -5,25 +5,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.demo</groupId>
-    <artifactId>webflux</artifactId>
+    <artifactId>spring</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>demo-rective</module>
-        <module>demo-client</module>
-        <module>tech-demo</module>
-        <module>akka-demo</module>
-        <module>proxy-demo</module>
+        <!--        <module>demo-rective</module>-->
+        <!--        <module>demo-client</module>-->
+        <!--        <module>tech-demo</module>-->
+        <!--        <module>proxy-demo</module>-->
+        <module>new-feature</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.2.RELEASE</version>
+        <version>3.4.4</version>
     </parent>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>24</java.version>
+        <skipTests>true</skipTests>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <lombok.version>1.18.38</lombok.version>
     </properties>
 
     <dependencies>
@@ -35,7 +38,24 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -43,5 +63,31 @@
         </plugins>
     </build>
 
+    <!--    <pluginRepositories>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>spring-snapshots</id>-->
+    <!--            <url>https://repo.spring.io/snapshot</url>-->
+    <!--        </pluginRepository>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>spring-milestones</id>-->
+    <!--            <url>https://repo.spring.io/milestone</url>-->
+    <!--        </pluginRepository>-->
+    <!--    </pluginRepositories>-->
 
+
+    <!--    <repositories>-->
+
+    <!--        <repository>-->
+    <!--            <id>spring-snapshots</id>-->
+    <!--            <url>https://repo.spring.io/snapshot</url>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>spring-milestones</id>-->
+    <!--            <url>https://repo.spring.io/milestone</url>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>central</id>-->
+    <!--            <url>https://repo1.maven.org/maven2/</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
 </project>

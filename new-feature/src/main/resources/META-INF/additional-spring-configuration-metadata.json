@@ -1,0 +1,15 @@
+{
+  "groups": [
+    {
+      "name": "com.demo.new-feature",
+      "type": "com.demo.newfeature.ConfigProp"
+    }
+  ],
+  "properties": [
+    {
+      "name": "com.demo.newfeature.ConfigProp.sqIdMask",
+      "type": "java.lang.String",
+      "sourceType": "com.demo.newfeature.ConfigProp"
+    }
+  ]
+}
