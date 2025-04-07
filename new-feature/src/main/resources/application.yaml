@@ -1,0 +1,29 @@
+server:
+  port: 8000
+#spring:
+#  grpc:
+#    server:
+#      enable: true
+management:
+  observations:
+    annotations:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  metrics:
+    tags:
+      application: influx-test
+  #    export:
+  #      influx3:
+  influx3:
+    metrics:
+      export:
+        batch-size: 10000
+        enabled: false
+        step: 10s
+        uri: http://localhost:8181
+        timeout: 1s
+        db: spring_metrics
+        token: apiv3_1yH1iS6W1IHNUMrm5IpYHp366z48HUoqRPcxOMtNGq4W3Wv6-p4scICMIcjm3oJ7Gxw-9Hew53PBVQIfL-6tWQ

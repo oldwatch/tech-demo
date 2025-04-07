@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.demo.newfeature.web.grpc.proto";
+//option java_outer_classname = "OneVO";
+
+// The greeting service definition.
+service gRPCDemo {
+  // Sends a greeting
+  rpc addEntry(AddOneRequest) returns (OneVO) {}
+  rpc searchByName(SearchRequest) returns (stream OneVO) {}
+}
+
+// The request message containing the user's name.
+message AddOneRequest {
+  string name = 1;
+  int32 intValue = 20;
+  float decValue = 30;
+}
+
+message SearchRequest{
+  string name = 1 ;
+  string token = 2;
+}
+
+// The response message containing the greetings
+message OneVO {
+  string id = 10;
+  string name = 20;
+  optional int64 submitTime = 30;
+  int32 intValue = 40;
+  float decValue = 50;
+  StatusType status = 60;
+  int64 createdDate = 70;
+  string createdBy = 80;
+
+  /*
+          String name,
+
+         LocalDateTime submitTime,
+         Integer intValue,
+         Float decValue,
+         StatusType status,
+         LocalDateTime createdDate,
+         String createdBy
+   */
+}
+
+enum StatusType{
+  RUN = 0;
+  STOP = 1;
+  DELETED = 2;
+}

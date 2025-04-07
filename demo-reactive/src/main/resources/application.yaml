@@ -1,0 +1,25 @@
+server:
+  port: 7000
+  servlet:
+    contextPath: /reactive
+spring:
+  application:
+    name: demo-reactive
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/postgres
+    username: test
+    password: test_pwd
+    #    driver-class-name: org.postgresql.Driver
+    pool:
+      max-idle-time: 1
+      max-life-time: 5
+      validation-depth: remote
+      validation-query: select 1
+      enabled: true
+logging:
+  level:
+    org.springframework: "INFO"

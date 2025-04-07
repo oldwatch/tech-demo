@@ -1,0 +1,36 @@
+server:
+  port: 9000
+  servlet:
+    contextPath: /task
+spring:
+  cloud:
+    task:
+      single-instance-enabled: true
+      tablePrefix: t_task_
+      initialize-enabled: true
+      observation:
+        enabled: true
+  application:
+    name: Demo-Task
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    #    url: jdbc:postgresql://localhost:5432/public
+    username: test
+    password: test_pwd
+    driver-class-name: org.postgresql.Driver
+management:
+  observations:
+    annotations:
+      enabled: true
+  endpoints:
+    restart:
+      enabled: true
+    web:
+      exposure:
+        include: health,info,metrics,restart
+  metrics:
+    tags:
+      application: task-test
+logging:
+  level:
+    org.springframework.cloud.task: "DEBUG"
