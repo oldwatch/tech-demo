@@ -6,12 +6,19 @@ import java.time.ZoneId;
 
 public final class DatetimeUtils {
 
-    public static LocalDateTime getLocalTime(long timestamp){
-        var instant= Instant.ofEpochSecond(timestamp);
+    public static final String TIME_ZONE = "Asia/Shanghai";
 
-        var localZoneId = ZoneId.of("Asia/Shanghai"); // Get system's default time zone
+    public static LocalDateTime getLocalTime(long timestamp) {
+        var instant = Instant.ofEpochSecond(timestamp);
 
-        return LocalDateTime.ofInstant(instant,localZoneId);
+        var localZoneId = ZoneId.of(TIME_ZONE); // Get system's default time zone
 
+        return LocalDateTime.ofInstant(instant, localZoneId);
+
+    }
+
+    public static Long getTimestamp(LocalDateTime date) {
+        var zonedDateTime = date.atZone(ZoneId.of(TIME_ZONE));
+        return zonedDateTime.toEpochSecond();
     }
 }

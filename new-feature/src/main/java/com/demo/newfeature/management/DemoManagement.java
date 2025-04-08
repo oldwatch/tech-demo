@@ -2,7 +2,7 @@ package com.demo.newfeature.management;
 
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
-import com.demo.newfeature.helper.DatetimeUtils;
+import com.demo.newfeature.helper.Optional2;
 import com.demo.newfeature.helper.RecordUtils;
 import com.demo.newfeature.repo.OneRepository;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -19,6 +18,8 @@ public class DemoManagement {
 
     private final OneRepository oneRepo;
 
+
+    private final int pageSize = 50;
 
     public DemoManagement(OneRepository oneRepo) {
         this.oneRepo = oneRepo;
@@ -28,23 +29,22 @@ public class DemoManagement {
         return oneRepo.save(rec);
     }
 
-    public Optional<OneRec> getOneById(Integer id) {
+    public Optional2<OneRec> getOneById(Integer id) {
         var result = oneRepo.getEntityById(id);
         if (result == null) {
-            return Optional.empty();
+            return Optional2.empty();
         }
-        return Optional.of(result);
+        return Optional2.of(result);
     }
 
-    public Optional<OneRec> updateOne(Integer id, Map<String, Object> map) {
+    public Optional2<OneRec> updateOne(Integer id, Map<String, Object> map) {
 
         var oldRec = oneRepo.getEntityById(id);
         if (oldRec == null) {
-            return Optional.empty();
+            return Optional2.empty();
         }
         OneRec newRec = RecordUtils.duplicate(oldRec, map);
-        oneRepo.save(newRec);
-        return Optional.of(oneRepo.save(newRec));
+        return Optional2.of(oneRepo.save(newRec));
     }
 
     public Integer updateStatus(Integer id, StatusType status) {
@@ -55,16 +55,15 @@ public class DemoManagement {
         return oneRepo.doDelete(id);
     }
 
-    public List<OneRec> queryByNameWild(String query, Pager pager) {
-        return oneRepo.findByWildName(query, pager);
+    public List<OneRec> queryByNameWild(String query, Optional2<Pager> pagerOpt) {
+        return switch (pagerOpt) {
+            case Optional2.Some<Pager> some -> oneRepo.findByWildName(query, some.get());
+            case Optional2.None<Pager> _ -> oneRepo.findByWildName(query, pageSize);
+        };
     }
 
-    public record Pager(int limit, LocalDateTime lastLocal) {
+    public record Pager(Integer limit, LocalDateTime lastLocal) {
 
-        public Pager(int limit, long timestamp) {
-            var tag = DatetimeUtils.getLocalTime(timestamp);
-            this(limit, tag);
-        }
 
     }
 

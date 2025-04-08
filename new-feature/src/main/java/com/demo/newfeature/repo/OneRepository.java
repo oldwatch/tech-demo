@@ -14,10 +14,18 @@ import java.util.List;
 @Repository
 public interface OneRepository extends CrudRepository<OneRec, Integer> {
 
-    @Query("select * from T_ONE " +
-            "where NAME like :name and CREATED_DATE>:#{#pager.lastLocal} and IS_DELETED= false" +
-            "order by CREATED_DATE desc limit :#{pager.limit} ")
+    @Query("""
+            select * from T_ONE 
+            where NAME like :name and CREATED_DATE>:#{#pager.lastLocal} and IS_DELETED= false 
+            order by CREATED_DATE desc limit :#{pager.limit} """)
     List<OneRec> findByWildName(@Param("name") String query, DemoManagement.Pager page);
+
+    @Query("""
+            select * from T_ONE 
+            where NAME like :name and IS_DELETED= false  
+            order by CREATED_DATE desc limit :limit """)
+    List<OneRec> findByWildName(@Param("name") String query, int limit);
+
 
     @Modifying
     @Query("update T_ONE set IS_DELETED = true where id = :id and IS_DELETED = false ")
