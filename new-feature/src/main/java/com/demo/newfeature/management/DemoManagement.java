@@ -8,7 +8,6 @@ import com.demo.newfeature.repo.OneRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,46 +24,46 @@ public class DemoManagement {
         this.oneRepo = oneRepo;
     }
 
-    public OneRec addOneEntity(OneRec rec){
+    public OneRec addOneEntity(OneRec rec) {
         return oneRepo.save(rec);
     }
 
-    public Optional<OneRec> getOneById(Integer id){
-        var result= oneRepo.findByIdAndDeletedIsFalse(id);
-        if(result==null){
+    public Optional<OneRec> getOneById(Integer id) {
+        var result = oneRepo.getEntityById(id);
+        if (result == null) {
             return Optional.empty();
         }
         return Optional.of(result);
     }
 
-    public Optional<OneRec> updateOne(Integer id, Map<String,Object> map){
+    public Optional<OneRec> updateOne(Integer id, Map<String, Object> map) {
 
-        var oldRec=oneRepo.findByIdAndDeletedIsFalse(id);
-        if(oldRec==null){
+        var oldRec = oneRepo.getEntityById(id);
+        if (oldRec == null) {
             return Optional.empty();
         }
-        OneRec newRec= RecordUtils.copy(oldRec,map);
+        OneRec newRec = RecordUtils.duplicate(oldRec, map);
         oneRepo.save(newRec);
         return Optional.of(oneRepo.save(newRec));
     }
 
-    public Integer  updateStatus(Integer id,StatusType status){
-        return oneRepo.doUpdateStatus(id,status);
+    public Integer updateStatus(Integer id, StatusType status) {
+        return oneRepo.doUpdateStatus(id, status);
     }
 
-    public Integer deleteOne(Integer id){
+    public Integer deleteOne(Integer id) {
         return oneRepo.doDelete(id);
     }
 
-    public List<OneRec> queryByNameWild(String query,Pager pager){
-        return oneRepo.findByWildName(query,pager);
+    public List<OneRec> queryByNameWild(String query, Pager pager) {
+        return oneRepo.findByWildName(query, pager);
     }
 
     public record Pager(int limit, LocalDateTime lastLocal) {
 
-        public Pager(int limit,long timestamp){
-                var tag= DatetimeUtils.getLocalTime(timestamp);
-                this(limit,tag);
+        public Pager(int limit, long timestamp) {
+            var tag = DatetimeUtils.getLocalTime(timestamp);
+            this(limit, tag);
         }
 
     }

@@ -28,9 +28,9 @@ public record RecordReflectInfo(Constructor<?> constructor, Map<String, RecordCo
 
         Constructor<?> constructFun = null;
         try {
-            constructFun = recCls.getConstructor(clsArray);
+            constructFun = recCls.getDeclaredConstructor(clsArray);
         } catch (NoSuchMethodException e) {
-            constructFun = recCls.getConstructors()[0];
+            constructFun = recCls.getDeclaredConstructors()[0];
         }
 
         this(constructFun, accessFunsMap);
@@ -53,7 +53,7 @@ public record RecordReflectInfo(Constructor<?> constructor, Map<String, RecordCo
     Object invokeAccess(String fieldName, Record rec, Class<?> targetType) {
 
         RecordComponent component = methodMap.get(fieldName);
-        if (!component.getType().equals(targetType)) {
+        if (component == null || !component.getType().equals(targetType)) {
             return null;
         }
         return invokeAccess(fieldName, rec);

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OneRepository extends CrudRepository<OneRec,Integer> {
+public interface OneRepository extends CrudRepository<OneRec, Integer> {
 
     @Query("select * from T_ONE " +
             "where NAME like :name and CREATED_DATE>:#{#pager.lastLocal} and IS_DELETED= false" +
@@ -27,6 +27,7 @@ public interface OneRepository extends CrudRepository<OneRec,Integer> {
     @Query("update T_ONE set STATUS=:status where IS_DELETED = false and id = :id")
     Integer doUpdateStatus(@Param("id") Integer id, @Param("status") StatusType status);
 
-    OneRec findByIdAndDeletedIsFalse(Integer id);
+    @Query("select * from T_ONE where IS_DELETED=false and ID= :id")
+    OneRec getEntityById(Integer id);
 
 }

@@ -14,22 +14,22 @@ public class IdEncodeTool {
     private final Sqids sqIds;
     private final Random random;
 
-    public IdEncodeTool(ConfigProp prop){
-        sqIds=Sqids.builder()
+    public IdEncodeTool(ConfigProp prop) {
+        sqIds = Sqids.builder()
                 .minLength(8)
-                .alphabet(prop.getSqIdMask())
+                .alphabet(prop.sqIdMask())
                 .build();
-        random=Random.from(RandomGenerator.getDefault());
+        random = Random.from(RandomGenerator.getDefault());
     }
 
-    public String encode(Integer id){
+    public String encode(Integer id) {
         return sqIds.encode(List.of(id.longValue(), random.nextLong()));
     }
 
-    public Integer decode(String  id){
-        List<Long> result= sqIds.decode(id);
+    public Integer decode(String id) {
+        List<Long> result = sqIds.decode(id);
 
-        if(result.isEmpty()){
+        if (result.isEmpty()) {
             return -1;
         }
         return result.getFirst().intValue();

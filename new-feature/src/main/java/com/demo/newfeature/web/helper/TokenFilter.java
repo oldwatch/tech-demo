@@ -20,7 +20,7 @@ public class TokenFilter implements Filter {
 
     @Override
     public void init(FilterConfig cfg) {
-        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, cfg.getServletContext());
     }
 
 

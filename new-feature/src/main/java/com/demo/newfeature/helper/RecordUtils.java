@@ -17,7 +17,7 @@ public class RecordUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static <R extends Record> R copy(R old, Map<String, Object> params) {
+    public static <R extends Record> R duplicate(R old, Map<String, Object> params) {
 
         var cls = old.getClass();
         if (!cls.isRecord()) {
@@ -36,7 +36,7 @@ public class RecordUtils {
 
 
     @SuppressWarnings("unchecked")
-    public static <S extends Record, T extends Record> T copyValues(S source, Class<T> targetCls, Map<String, Object> extValues) {
+    public static <S extends Record, T extends Record> T copy(S source, Class<T> targetCls, Map<String, Object> extValues) {
 
         assert extValues != null;
         var srcCls = source.getClass();
@@ -50,7 +50,7 @@ public class RecordUtils {
         var paramArray = Arrays.stream(targetCls.getRecordComponents())
                 .map(comp -> {
                     String field = comp.getName();
-                    return extValues.getOrDefault(field, srcInfo.invokeAccess(field, source));
+                    return extValues.getOrDefault(field, srcInfo.invokeAccess(field, source, comp.getType()));
                 }).toArray(Object[]::new);
         return (T) targetInfo.construct(paramArray);
 

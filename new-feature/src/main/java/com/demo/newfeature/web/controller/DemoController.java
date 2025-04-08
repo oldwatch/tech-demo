@@ -36,7 +36,7 @@ public class DemoController {
         var rec = req.generRec(store.getUserInfo());
         var result = management.addOneEntity(rec);
         Map<String, Object> additions = Map.of("entityId", idEncodeTool.encode(result.id()));
-        return RecordUtils.copyValues(rec, OneVO.class, additions);
+        return RecordUtils.copy(rec, OneVO.class, additions);
 
     }
 
