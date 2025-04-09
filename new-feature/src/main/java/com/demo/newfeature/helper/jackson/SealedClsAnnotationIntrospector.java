@@ -1,14 +1,14 @@
-package com.demo.newfeature.helper;
+package com.demo.newfeature.helper.jackson;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.introspect.Annotated;
-import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
+import com.fasterxml.jackson.databind.introspect.NopAnnotationIntrospector;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SealedClsAnnotationIntrospector extends JacksonAnnotationIntrospector {
+public class SealedClsAnnotationIntrospector extends NopAnnotationIntrospector {
     @Override
     public Version version() {
         return Version.unknownVersion();

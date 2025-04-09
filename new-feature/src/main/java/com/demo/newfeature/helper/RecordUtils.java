@@ -12,9 +12,15 @@ public class RecordUtils {
 
     private final static Map<Class<? extends Record>, RecordReflectInfo> recInfoMap = new ConcurrentHashMap<>();
 
+
     private static RecordReflectInfo getRecInfo(Class<? extends Record> recCls) {
         return recInfoMap.computeIfAbsent(recCls, RecordReflectInfo::new);
     }
+
+    public static <R extends Record> R duplicate(R old) {
+        return duplicate(old, Map.of());
+    }
+
 
     @SuppressWarnings("unchecked")
     public static <R extends Record> R duplicate(R old, Map<String, Object> params) {
@@ -34,6 +40,9 @@ public class RecordUtils {
 
     }
 
+    public static <S extends Record, T extends Record> T copy(S source, Class<T> targetClass) {
+        return copy(source, targetClass, Map.of());
+    }
 
     @SuppressWarnings("unchecked")
     public static <S extends Record, T extends Record> T copy(S source, Class<T> targetCls, Map<String, Object> extValues) {
@@ -56,5 +65,6 @@ public class RecordUtils {
 
 
     }
+
 
 }

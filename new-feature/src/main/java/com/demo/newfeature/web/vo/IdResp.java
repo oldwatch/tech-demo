@@ -1,5 +1,9 @@
 package com.demo.newfeature.web.vo;
 
-public record IdResp(String id, String status) implements CommResp {
+import com.demo.newfeature.helper.jackson.EntityIDMask;
+
+public record IdResp(
+        @EntityIDMask
+        Integer id, String status) implements CommResp {
 
 }

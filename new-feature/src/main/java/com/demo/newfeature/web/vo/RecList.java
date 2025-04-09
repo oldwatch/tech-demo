@@ -19,7 +19,7 @@ public record RecList(List<OneVO> recList, String nextToken) {
                 ).orElse(DatetimeUtils.getLocalTime(0));
         var pager = new DemoManagement.Pager(pageSize, maxDate);
 
-        var voList = recList.stream().map(e -> new OneVO(e, idEncodeTool.encode(e.id()))).toList();
+        var voList = recList.stream().map(e -> new OneVO(e)).toList();
         this(voList, idEncodeTool.encodePager(pager));
     }
 }

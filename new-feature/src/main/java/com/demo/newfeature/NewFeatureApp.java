@@ -1,6 +1,7 @@
 package com.demo.newfeature;
 
-import com.demo.newfeature.helper.SealedClsJacksonModule;
+import com.demo.newfeature.helper.jackson.EntityIDJacksonModule;
+import com.demo.newfeature.helper.jackson.SealedClsJacksonModule;
 import com.demo.newfeature.web.helper.TokenFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,11 +24,13 @@ public class NewFeatureApp {
     }
 
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer(EntityIDJacksonModule module) {
         return builder -> {
             builder.postConfigurer(objectMapper -> {
                 // Customize the ObjectMapper here
+
                 objectMapper.registerModule(new SealedClsJacksonModule());
+                objectMapper.registerModule(module);
             });
         };
     }

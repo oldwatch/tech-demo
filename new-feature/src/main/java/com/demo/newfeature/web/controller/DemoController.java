@@ -66,8 +66,8 @@ public class DemoController {
     }
 
     private OneVO generVO(OneRec entity) {
-        Map<String, Object> additions = Map.of("entityId", idEncodeTool.encode(entity.id()));
-        return RecordUtils.copy(entity, OneVO.class, additions);
+//        Map<String, Object> additions = Map.of("entityId", idEncodeTool.encode(entity.id()));
+        return RecordUtils.copy(entity, OneVO.class);
     }
 
     @PutMapping("/{id}")
