@@ -1,6 +1,7 @@
 package com.demo.newfeature.helper;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.RecordComponent;
@@ -8,8 +9,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
+
 public record RecordReflectInfo(Constructor<?> constructor, Map<String, RecordComponent> methodMap) {
+
+    private final static Logger log = LoggerFactory.getLogger(RecordReflectInfo.class);
 
     RecordReflectInfo(Class<? extends Record> recCls) {
         Map<String, RecordComponent> accessFunsMap = Arrays.stream(recCls.getRecordComponents())

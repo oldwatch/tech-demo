@@ -14,11 +14,15 @@
 *.jar
 *.exe
 
-
 out/
 target/
 build/
 bin/
+
+###################
+mvnw.cmd
+mvnw
+.mvn/
 
 # OS generated files #
 ######################

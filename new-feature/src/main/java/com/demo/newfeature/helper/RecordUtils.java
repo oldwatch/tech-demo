@@ -1,14 +1,15 @@
 package com.demo.newfeature.helper;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Slf4j
 public class RecordUtils {
 
+    private final static Logger log = LoggerFactory.getLogger(RecordUtils.class);
 
     private final static Map<Class<? extends Record>, RecordReflectInfo> recInfoMap = new ConcurrentHashMap<>();
 

@@ -2,7 +2,8 @@ package com.demo.newfeature.helper;
 
 import com.demo.newfeature.ConfigProp;
 import com.demo.newfeature.management.DemoManagement;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.sqids.Sqids;
 
@@ -10,9 +11,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.random.RandomGenerator;
 
-@Slf4j
 @Component
 public class IdEncodeTool {
+
+    private final static Logger log = LoggerFactory.getLogger(IdEncodeTool.class);
 
     private final Sqids sqIds;
     private final Random random;
