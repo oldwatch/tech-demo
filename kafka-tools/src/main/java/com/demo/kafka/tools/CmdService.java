@@ -12,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Locale;
 
@@ -30,6 +31,14 @@ public class CmdService implements CommandLineRunner {
         this.consumerService = consumerService;
     }
 
+    private static String getCleanInput(BufferedReader reader) throws IOException {
+        var input = reader.readLine();
+        if (input == null || input.isBlank()) {
+            return null;
+        }
+        input = input.trim().toLowerCase(Locale.ENGLISH);
+        return input;
+    }
 
     private void outputHelp(String input) {
         var params = input.split("\\s+");
@@ -56,7 +65,6 @@ public class CmdService implements CommandLineRunner {
         }
     }
 
-
     @Override
     public void run(String... args) throws Exception {
         var mode = "command";
@@ -70,11 +78,8 @@ public class CmdService implements CommandLineRunner {
             var reader = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
 
-                var input = reader.readLine();
-                if (input == null || input.isBlank()) {
-                    continue;
-                }
-                input = input.trim().toLowerCase(Locale.ENGLISH);
+                var input = getCleanInput(reader);
+                if (input == null) continue;
                 if (input.equals("exit")) {
                     break;
                 }
@@ -88,9 +93,36 @@ public class CmdService implements CommandLineRunner {
 
             }
         } else if (mode.equals("consumer")) {
-            var number = Integer.parseInt(args[1]);
-            consumerService.execute(number);
+
+            System.out.println("input start with number or stop command");
+            var reader = new BufferedReader(new InputStreamReader(System.in));
+            while (true) {
+
+                var input = getCleanInput(reader);
+                if (input == null) continue;
+                if (input.equals("exit")) {
+                    break;
+                }
+
+                if (input.startsWith("start")) {
+                    consumerService.start(Utils.getIntValue(Utils.getSecordWord(input), 0));
+                    System.out.println("consumerService is running.");
+                } else if (input.startsWith("stop")) {
+                    consumerService.stop();
+                    System.out.println("consumerService is stopped.");
+                } else {
+                    System.out.println("invalid command, start N or stop or exit.");
+                }
+            }
         }
+    }
+
+    private int getNumber(String line) {
+        var strs = line.split("\\s+");
+        if (strs.length < 2) {
+            return 3;
+        }
+        return Integer.parseInt(strs[1]);
     }
 
 

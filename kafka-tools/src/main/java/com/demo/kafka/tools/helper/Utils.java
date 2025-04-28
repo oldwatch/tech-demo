@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 public class Utils {
 
     private static final Pattern pattern = Pattern.compile("^([A-Z][^A-Z]+)");
+    private static final Pattern word2nd = Pattern.compile("^\\s?(\\S+)\\s+(\\S+)");
 
     public static int getIntValue(String str, int defaultVal) {
 
@@ -19,6 +20,15 @@ public class Utils {
         var match = pattern.matcher(str);
         if (match.find()) {
             return match.group();
+        } else {
+            return "";
+        }
+    }
+
+    public static String getSecordWord(String str) {
+        var match = word2nd.matcher(str);
+        if (match.find()) {
+            return match.group(2);
         } else {
             return "";
         }

@@ -1,15 +1,18 @@
 package com.demo.kafka.tools.management;
 
 import com.demo.kafka.tools.entity.DataEntity;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 @Service
 @Transactional
@@ -18,49 +21,45 @@ public class KafkaManager {
     private final static Logger log = LoggerFactory.getLogger(KafkaManager.class);
 
     private final KafkaTemplate<String, DataEntity> template;
-
-    public KafkaManager(KafkaTemplate<String, DataEntity> template) {
-        this.template = template;
-    }
-
-    public void doSend(String key, DataEntity entry) {
-
-        try {
-            var future = template.sendDefault(key, entry);
-            var result = future.get();
-            log.info("result:{}", result.getRecordMetadata());
-
-        } catch (InterruptedException e) {
-            log.info(" been closed");
-        } catch (ExecutionException | CancellationException e) {
-            log.error(" send fail", e);
+    private final BiConsumer<? super SendResult<String, DataEntity>, ? super Throwable> callback = (result, exception) -> {
+        if (exception == null) {
+            log.info("send data: \n {}", result.getProducerRecord().value());
+            log.info("data meta: \n {}", result.getRecordMetadata());
+        } else {
+            log.error(" send fail: ", exception);
+            log.info(" record: {}", result);
         }
-//        future.whenComplete((result, ex) -> {
-//            if (ex == null) {
-//                log.info("success:{}", result);
-//            } else {
-//                log.error("exec fail:{}, data:{}, metaData: {}", ex.getMessage(), result.getProducerRecord(), result.getRecordMetadata());
-//                throw new IllegalStateException("save to kafka fail");
-//            }
-//        });
+    };
+
+
+    public KafkaManager(KafkaTemplate<String, DataEntity> template, ConsumerFactory<String, DataEntity> factory) {
+        this.template = template;
+        this.template.setConsumerFactory(factory);
     }
 
-    public void doReceiveAndSave() {
-        var record = template.receive("test-topic", 0, 0, Duration.ofMillis(10));
+    public CompletableFuture<SendResult<String, DataEntity>> doSend(String key, DataEntity record) {
+        var future = template.sendDefault(key, record);
+
+        future.whenCompleteAsync(callback);
+        return future;
+    }
+
+    public Result doReceiveAndSave(long offset) {
+
+        var record = template.receive("test-topic", 0, offset, Duration.ofMillis(10));
         if (record == null) {
-            return;
+            log.info("nothing found");
+            return null;
         }
         var entity = record.value();
-        var future = template.send("test-topic-operate", "operate-" + entity.seq(), entity);
+        var future = template.send("test-store-topic", "operate-" + entity.seq(), entity);
+        future.whenCompleteAsync(callback);
+        return new Result(future, record);
 
-        future.whenComplete((result, ex) -> {
-            if (ex == null) {
-                log.info("success finish operate:{}", result);
-            } else {
-                log.error("exec fail:{}, entity: {} ", ex.getMessage(), result.getProducerRecord().value());
-                throw new IllegalStateException("move between topic fail");
-            }
-        });
+    }
+
+    public record Result(CompletableFuture<SendResult<String, DataEntity>> future,
+                         ConsumerRecord<String, DataEntity> record) {
 
     }
 }

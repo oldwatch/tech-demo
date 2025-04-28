@@ -6,6 +6,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.support.JacksonUtils;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
@@ -24,13 +25,8 @@ public class KafkaApplication {
 
     }
 
-//    @Bean
-//    public RecordMessageConverter getMessageConverter(ObjectMapper mapper) {
-//        return new ByteArrayJsonMessageConverter(mapper);
-//    }
-
     @Bean
     public ObjectMapper getObjectMapper() {
-        return new ObjectMapper();
+        return JacksonUtils.enhancedObjectMapper();
     }
 }

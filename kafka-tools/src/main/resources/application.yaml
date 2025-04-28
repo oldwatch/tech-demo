@@ -9,12 +9,19 @@ spring:
     producer:
       value-serializer: "org.springframework.kafka.support.serializer.JsonSerializer"
       default-topic: "test-topic"
+      properties:
+        spring.json.type.mapping: "entity: com.demo.kafka.tools.entity.DataEntity"
     consumer:
       value-deserializer: "org.springframework.kafka.support.serializer.JsonDeserializer"
       default-topic: "test-topic"
       group-id: "test-group"
       isolation-level: "READ_COMMITTED"
+      properties:
+        spring.json.type.mapping: "entity: com.demo.kafka.tools.entity.DataEntity"
+        spring.json.trusted.packages: "com.demo.kafka.tools.entity"
 logging:
+  root: "warn"
   level:
-    org.springframework.kafka: "trace"
+    org.springframework.kafka: "warn"
     com.demo.kafka: "info"
+    org.apache.kafka: "warn"
