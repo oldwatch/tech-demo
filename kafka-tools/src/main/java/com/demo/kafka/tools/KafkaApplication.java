@@ -16,10 +16,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.JacksonUtils;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 
-//@EnableTransactionManagement
+@EnableTransactionManagement
 @EnableKafka
 //@EnableKafkaStreams
 @SpringBootApplication
@@ -49,7 +50,7 @@ public class KafkaApplication {
         var template = new KafkaTemplate<>(productFactory);
         template.setTransactionIdPrefix("tx-store-" + seed);
         template.setDefaultTopic("test-store-topic");
-        
+
         return template;
     }
 
