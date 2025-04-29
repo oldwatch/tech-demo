@@ -104,14 +104,25 @@ public class CmdService implements CommandLineRunner {
                     break;
                 }
 
-                if (input.startsWith("start")) {
-                    consumerService.start(Utils.getIntValue(Utils.getSecordWord(input), 0));
-                    System.out.println("consumerService is running.");
-                } else if (input.startsWith("stop")) {
-                    consumerService.stop();
-                    System.out.println("consumerService is stopped.");
-                } else {
-                    System.out.println("invalid command, start N or stop or exit.");
+                var operate = Utils.getFirstWord(input);
+
+                switch (operate) {
+                    case "start" -> {
+                        consumerService.start(Utils.getIntValue(Utils.getSecordWord(input), 0));
+                        System.out.println("consumerService is running.");
+                    }
+                    case "stop" -> {
+                        consumerService.stop();
+                        System.out.println("consumerService is stopped.");
+                    }
+                    case "start2" -> {
+                        consumerService.start2();
+                        System.out.println("consumer Service II is running.");
+                    }
+                    case "stop2" -> {
+                        consumerService.stop2();
+                        System.out.println("consumer Service II is stopped.");
+                    }
                 }
             }
         }

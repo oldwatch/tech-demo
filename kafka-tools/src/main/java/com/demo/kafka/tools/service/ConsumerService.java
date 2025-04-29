@@ -21,6 +21,7 @@ public final class ConsumerService {
     private final KafkaManager manager;
     private final ExecutorService executorService = Executors.newFixedThreadPool(4);
     private final AtomicBoolean sign = new AtomicBoolean(true);
+    private final AtomicBoolean sign2 = new AtomicBoolean(true);
     private AtomicLong offset = new AtomicLong(0);
 
 
@@ -46,6 +47,34 @@ public final class ConsumerService {
 
     public void stop() {
         sign.set(false);
+    }
+
+    public void start2() {
+        sign2.set(true);
+        executorService.submit(() -> {
+            while (sign2.get()) {
+                try {
+                    execute2();
+
+                } catch (Exception e) {
+                    log.error(" receive data fail:", e);
+                }
+            }
+        });
+    }
+
+    public void stop2() {
+        sign2.set(false);
+    }
+
+    private void execute2() throws InterruptedException {
+        
+        var list = manager.doReceive();
+        if (list == null) {
+            Thread.sleep(Duration.ofSeconds(10));
+            return;
+        }
+        list.forEach(entry -> log.info(" entry: {}", entry));
     }
 
     private void execute() throws InterruptedException {

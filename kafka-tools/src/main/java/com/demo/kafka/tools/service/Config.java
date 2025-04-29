@@ -18,7 +18,7 @@ public sealed interface Config permits ProductConfig, Config.NullConfig {
 
         var cfgOpt = Arrays.stream(Config.class.getPermittedSubclasses())
                 .filter(cls -> {
-                    var cmdName = Utils.getFirstWord(cls.getName()).toLowerCase();
+                    var cmdName = Utils.getSimpleClsName(cls.getName());
                     return command.startsWith(cmdName);
                 })
                 .findFirst();

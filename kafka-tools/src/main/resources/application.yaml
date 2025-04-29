@@ -4,9 +4,8 @@ spring:
       write-dates-as-timestamps: false
   kafka:
     bootstrap-servers: "localhost:9092"
-    template:
-      default-topic: "test-topic"
     producer:
+      transaction-id-prefix: "tx-for-prod-${timestamp}"
       value-serializer: "org.springframework.kafka.support.serializer.JsonSerializer"
       default-topic: "test-topic"
       properties:

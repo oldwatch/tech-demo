@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public record InputParams(String command, String param, Config config) {
 
 
-    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+\"([^\"]+)\")?\\s+(.+)$");
+    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+\"([^\"]+)\")?(\\s.+)?$");
     static Pattern argReg = Pattern.compile("^-([^=]+)=(\\S+)");
 
     public InputParams(String input) {
@@ -23,7 +23,7 @@ public record InputParams(String command, String param, Config config) {
         }
 
         var cmd = matcher.group(1);
-        var text = matcher.group(4);
+        var text = matcher.group(3);
         var params = generAdditions(matcher.groupCount() > 3 ? matcher.group(4) : "");
 
         var config = Config.createConfig(params, cmd);
