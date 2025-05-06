@@ -1,6 +1,7 @@
 package com.demo.kafka.tools.helper;
 
 import java.util.Locale;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Utils {
@@ -8,6 +9,7 @@ public class Utils {
     private static final Pattern pattern = Pattern.compile("^(\\w+)");
     private static final Pattern ptnName = Pattern.compile("^([A-Z]{1}[^A-Z]+)");
     private static final Pattern word2nd = Pattern.compile("^\\s?(\\S+)\\s+(\\S+)");
+    private static final Random random = new Random(System.currentTimeMillis());
 
     public static int getIntValue(String str, int defaultVal) {
 
@@ -25,6 +27,10 @@ public class Utils {
         } else {
             return "";
         }
+    }
+
+    public static Integer getRandomInt() {
+        return random.nextInt(100);
     }
 
     public static String getFirstWord(String str) {
@@ -53,5 +59,17 @@ public class Utils {
         } else {
             return b;
         }
+    }
+
+    public static String removeOuter(String param) {
+        if (param == null || param.isBlank()) {
+            return "";
+        }
+        if (param.startsWith("\"") && param.endsWith("\"")) {
+            return param.substring(1, param.length() - 1);
+        } else {
+            return param;
+        }
+
     }
 }

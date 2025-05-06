@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.List;
 
+@Import(StreamProductFactory.class)
 @EnableTransactionManagement
 @EnableKafka
 //@EnableKafkaStreams
@@ -68,6 +70,7 @@ public class KafkaApplication {
         var consumer = consumerFactory.createConsumer("test-group-2", "manager");
         consumer.assign(List.of(new TopicPartition("test-topic", 0)
         ));
+
         return consumer;
     }
 
@@ -80,4 +83,6 @@ public class KafkaApplication {
         factory.getContainerProperties().setPollTimeout(3000);
         return factory;
     }
+
+
 }

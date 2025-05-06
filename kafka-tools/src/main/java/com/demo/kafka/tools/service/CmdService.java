@@ -1,11 +1,7 @@
-package com.demo.kafka.tools;
+package com.demo.kafka.tools.service;
 
 import com.demo.kafka.tools.entity.InputParams;
 import com.demo.kafka.tools.helper.Utils;
-import com.demo.kafka.tools.service.Config;
-import com.demo.kafka.tools.service.ConsumerService;
-import com.demo.kafka.tools.service.ProductConfig;
-import com.demo.kafka.tools.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -25,10 +21,13 @@ public class CmdService implements CommandLineRunner {
 
     private final ConsumerService consumerService;
 
+    private final StreamService streamService;
 
-    public CmdService(ProductService productService, ConsumerService consumerService) {
+
+    public CmdService(ProductService productService, ConsumerService consumerService, StreamService streamService) {
         this.productService = productService;
         this.consumerService = consumerService;
+        this.streamService = streamService;
     }
 
     private static String getCleanInput(BufferedReader reader) throws IOException {
@@ -57,9 +56,10 @@ public class CmdService implements CommandLineRunner {
     private void executeCommand(String input) {
 
         var params = new InputParams(input);
-        log.info(" params:{}", params.config());
+        log.info(" cmd:{},additions:{} ", params.command(), params.config());
         switch (params.config()) {
-            case ProductConfig cfg -> productService.execute(params.param(), cfg);
+            case ProductConfig cfg -> productService.execute(cfg.param(), cfg);
+            case StreamConfig cfg -> streamService.doCommand(cfg.cmd(), cfg);
             default -> {
             }
         }

@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public record InputParams(String command, String param, Config config) {
+public record InputParams(String command, Config config) {
 
 
-    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+\"([^\"]+)\")?(\\s.+)?$");
+    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+(\\S+))?(\\s.+)?$");
     static Pattern argReg = Pattern.compile("^-([^=]+)=(\\S+)");
 
     public InputParams(String input) {
@@ -26,9 +26,9 @@ public record InputParams(String command, String param, Config config) {
         var text = matcher.group(3);
         var params = generAdditions(matcher.groupCount() > 3 ? matcher.group(4) : "");
 
-        var config = Config.createConfig(params, cmd);
+        var config = Config.createConfig(params, text, cmd);
 
-        this(cmd, text, config);
+        this(cmd, config);
     }
 
     static Map<String, String> generAdditions(String params) {

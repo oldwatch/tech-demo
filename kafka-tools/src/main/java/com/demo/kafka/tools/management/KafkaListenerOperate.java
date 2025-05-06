@@ -34,8 +34,13 @@ public class KafkaListenerOperate {
         log.info("receive msg: {} - {} ", record.value(), record.key());
 
         var entity = record.value();
+        if (entity.text() == null) {
+            log.warn("empty entity {}", entity.seq());
+            return;
+        }
+
         if (entity.text().contains("error") && seq.incrementAndGet() % 2 == 0) {
-            
+
             throw new IllegalArgumentException();
         }
 

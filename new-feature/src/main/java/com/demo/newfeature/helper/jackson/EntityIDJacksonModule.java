@@ -21,7 +21,6 @@ public class EntityIDJacksonModule extends SimpleModule {
 
     @Override
     public Version version() {
-        // TODO Generate proper version?
         return Version.unknownVersion();
     }
 
