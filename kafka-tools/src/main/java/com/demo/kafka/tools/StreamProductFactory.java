@@ -4,10 +4,14 @@ import com.demo.kafka.tools.entity.DataEntity;
 import com.demo.kafka.tools.entity.SummaryEntity;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
+import org.apache.kafka.streams.kstream.Materialized;
+import org.apache.kafka.streams.kstream.Produced;
+import org.apache.kafka.streams.state.KeyValueStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.FactoryBean;
@@ -60,11 +64,26 @@ public class StreamProductFactory {
     @Bean
     public KStream<String, DataEntity> numCountStream(@Qualifier("localKafkaStreamBuilder") StreamsBuilder streamsBuilder) {
 //
-        var serde = new JsonSerde<DataEntity>();
-        serde.ignoreTypeHeaders();
+        var serde_entity = new JsonSerde<>(DataEntity.class);
+        var serde_summary = new JsonSerde<>(SummaryEntity.class);
+        serde_summary.ignoreTypeHeaders();
+        serde_entity.ignoreTypeHeaders();
+
+//        Map<String, ?> props = Map.of(JsonDeserializer.TYPE_MAPPINGS,
+//                "entity: com.demo.kafka.tools.entity.DataEntity,summary: com.demo.kafka.tools.entity.SummaryEntity",
+//                JsonDeserializer.TRUSTED_PACKAGES,
+//                "com.demo.kafka.tools.entity",
+//                JsonDeserializer.USE_TYPE_INFO_HEADERS,
+//                true,
+//                JsonSerializer.ADD_TYPE_INFO_HEADERS,
+//                true,
+//                JsonDeserializer.VALUE_DEFAULT_TYPE,
+//                "com.demo.kafka.tools.entity.DataEntity"
+//        );
+//        serde.configure(props, false);
 
         KStream<String, DataEntity> messageStream = streamsBuilder
-                .stream("test-topic", Consumed.with(STRING_SERDE, serde));
+                .stream("test-topic", Consumed.with(STRING_SERDE, serde_entity));
 
         messageStream
                 .filter((s, e) -> e.text() != null && !e.text().isBlank())
@@ -74,8 +93,14 @@ public class StreamProductFactory {
                         }
                 )
                 .groupByKey()
-                .aggregate(SummaryEntity::new, (s, integer, summary) -> summary.add(s, integer))
-                .toStream().to("count-topic");
+                .aggregate(SummaryEntity::new,
+                        (s, integer, summary) -> summary.add(s, integer),
+                        Materialized.<String, SummaryEntity, KeyValueStore<Bytes, byte[]>>as("test-aggregate-store")
+                                .withKeySerde(STRING_SERDE)
+                                .withValueSerde(serde_summary)
+                )
+                .toStream()
+                .to("count-topic", Produced.with(STRING_SERDE, serde_summary));
 
         return messageStream;
     }

@@ -1,10 +1,10 @@
 package com.demo.kafka.tools.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SummaryEntity {
-    private final List<String> names = new ArrayList<>();
+    private final Set<String> names = new HashSet<>();
     private int sum;
     private int count;
 
@@ -19,14 +19,14 @@ public class SummaryEntity {
         return this;
     }
 
-    public List<String> getNames() {
+    public Set<String> getNames() {
         return names;
     }
 
     public int getSum() {
         return sum;
     }
-    
+
     public int getCount() {
         return count;
     }
