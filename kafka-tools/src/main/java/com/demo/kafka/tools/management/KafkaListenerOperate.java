@@ -44,7 +44,7 @@ public class KafkaListenerOperate {
             throw new IllegalArgumentException();
         }
 
-        var future = storeProduct.sendDefault("operate-" + record.offset(), entity);
+        var future = storeProduct.sendDefault(record.key(), new DataEntity(entity));
 
         try {
             future.get(10, TimeUnit.SECONDS);

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public record InputParams(String command, Config config) {
 
 
-    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+(\\S+))?(\\s.+)?$");
+    static Pattern paramReg = Pattern.compile("^\\s*(\\w+)(\\s+(\\S+))?(\\s.+=.+)?$");
     static Pattern argReg = Pattern.compile("^-([^=]+)=(\\S+)");
 
     public InputParams(String input) {
@@ -34,6 +34,7 @@ public record InputParams(String command, Config config) {
     static Map<String, String> generAdditions(String params) {
 
         if (!(params == null || params.isBlank())) {
+            params = params.trim();
             var arrays = params.split("\\s+");
             return Arrays.stream(arrays)
                     .map(argReg::matcher)

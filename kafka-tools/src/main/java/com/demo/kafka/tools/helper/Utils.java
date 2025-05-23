@@ -10,6 +10,16 @@ public class Utils {
     private static final Pattern ptnName = Pattern.compile("^([A-Z]{1}[^A-Z]+)");
     private static final Pattern word2nd = Pattern.compile("^\\s?(\\S+)\\s+(\\S+)");
     private static final Random random = new Random(System.currentTimeMillis());
+    private static final Pattern ptnKeyword = Pattern.compile("^[^\\-]+\\-(\\.+)$");
+
+    public static String getKeyword(String str) {
+        var matcher = ptnKeyword.matcher(str);
+        if (matcher.find()) {
+            return matcher.group(1);
+        } else {
+            return str;
+        }
+    }
 
     public static int getIntValue(String str, int defaultVal) {
 
@@ -72,4 +82,5 @@ public class Utils {
         }
 
     }
+
 }

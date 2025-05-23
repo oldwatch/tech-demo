@@ -4,7 +4,11 @@ import com.demo.kafka.tools.entity.InputParams;
 import com.demo.kafka.tools.helper.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -14,7 +18,7 @@ import java.util.Locale;
 
 
 @Component
-public class CmdService implements CommandLineRunner {
+public class CmdService implements CommandLineRunner, ApplicationContextAware {
 
     private final Logger log = LoggerFactory.getLogger(CmdService.class);
     private final ProductService productService;
@@ -23,6 +27,7 @@ public class CmdService implements CommandLineRunner {
 
     private final StreamService streamService;
 
+    private ApplicationContext applicationContext;
 
     public CmdService(ProductService productService, ConsumerService consumerService, StreamService streamService) {
         this.productService = productService;
@@ -53,17 +58,6 @@ public class CmdService implements CommandLineRunner {
         System.out.println(config.getDetail());
     }
 
-    private void executeCommand(String input) {
-
-        var params = new InputParams(input);
-        log.info(" cmd:{},additions:{} ", params.command(), params.config());
-        switch (params.config()) {
-            case ProductConfig cfg -> productService.execute(cfg.param(), cfg);
-            case StreamConfig cfg -> streamService.doCommand(cfg.cmd(), cfg);
-            default -> {
-            }
-        }
-    }
 
     @Override
     public void run(String... args) throws Exception {
@@ -74,10 +68,53 @@ public class CmdService implements CommandLineRunner {
 
         if (mode.equals("command")) {
 
-            System.out.println("input command,or help");
-            var reader = new BufferedReader(new InputStreamReader(System.in));
-            while (true) {
+            operateCommand();
+        } else if (mode.equals("consumer")) {
 
+            operateService();
+        }
+    }
+
+    private void operateService() throws IOException {
+        System.out.println("input start with number or stop command");
+        var reader = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+
+            var input = getCleanInput(reader);
+            if (input == null) continue;
+            if (input.equals("exit")) {
+                break;
+            }
+
+            var operate = Utils.getFirstWord(input);
+
+            switch (operate) {
+                case "start" -> {
+                    consumerService.start(Utils.getIntValue(Utils.getSecordWord(input), 0));
+                    System.out.println("consumerService is running.");
+                }
+                case "stop" -> {
+                    consumerService.stop();
+                    System.out.println("consumerService is stopped.");
+                }
+                case "start2" -> {
+                    consumerService.start2();
+                    System.out.println("consumer Service II is running.");
+                }
+                case "stop2" -> {
+                    consumerService.stop2();
+                    System.out.println("consumer Service II is stopped.");
+                }
+            }
+        }
+    }
+
+    private void operateCommand() throws IOException {
+        var reader = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            System.out.println("input command,or help:");
+
+            try {
                 var input = getCleanInput(reader);
                 if (input == null) continue;
                 if (input.equals("exit")) {
@@ -89,43 +126,23 @@ public class CmdService implements CommandLineRunner {
                     continue;
                 }
 
-                executeCommand(input);
-
-            }
-        } else if (mode.equals("consumer")) {
-
-            System.out.println("input start with number or stop command");
-            var reader = new BufferedReader(new InputStreamReader(System.in));
-            while (true) {
-
-                var input = getCleanInput(reader);
-                if (input == null) continue;
-                if (input.equals("exit")) {
-                    break;
-                }
-
-                var operate = Utils.getFirstWord(input);
-
-                switch (operate) {
-                    case "start" -> {
-                        consumerService.start(Utils.getIntValue(Utils.getSecordWord(input), 0));
-                        System.out.println("consumerService is running.");
-                    }
-                    case "stop" -> {
-                        consumerService.stop();
-                        System.out.println("consumerService is stopped.");
-                    }
-                    case "start2" -> {
-                        consumerService.start2();
-                        System.out.println("consumer Service II is running.");
-                    }
-                    case "stop2" -> {
-                        consumerService.stop2();
-                        System.out.println("consumer Service II is stopped.");
+                var params = new InputParams(input);
+                log.info(" cmd:{},additions:{} ", params.command(), params.config());
+                switch (params.config()) {
+                    case ProductConfig cfg -> productService.execute(cfg.param(), cfg);
+                    case StreamConfig cfg -> streamService.doCommand(cfg.cmd(), cfg);
+                    default -> {
+                        System.out.println("unknown operate");
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace(System.err);
             }
+
         }
+        reader.close();
+        System.exit(SpringApplication.exit(applicationContext, () -> 0)); // Exit with code
+
     }
 
     private int getNumber(String line) {
@@ -137,4 +154,8 @@ public class CmdService implements CommandLineRunner {
     }
 
 
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 }

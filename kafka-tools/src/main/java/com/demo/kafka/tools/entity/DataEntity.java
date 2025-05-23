@@ -10,7 +10,8 @@ public record DataEntity(int seq, String text, LocalDateTime timestamp, Status s
         this(seq, text, LocalDateTime.now(), Status.Start, Utils.getRandomInt());
     }
 
-    public DataEntity(DataEntity entity, DataEntity.Status status) {
+    public DataEntity(DataEntity entity) {
+        var status = entity.seq % 3 == 0 ? Status.End : Status.Operate;
         this(entity.seq, entity.text, entity.timestamp, status, entity.val);
     }
 
