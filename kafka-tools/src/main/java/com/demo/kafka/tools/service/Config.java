@@ -5,7 +5,7 @@ import com.demo.kafka.tools.helper.Utils;
 import java.util.Arrays;
 import java.util.Map;
 
-public sealed interface Config permits ProductConfig, StreamConfig, Config.NullConfig {
+public sealed interface Config permits ProductConfig, StoreConfig, Config.NullConfig {
 
     Config NULL_CONFIG = new NullConfig();
 

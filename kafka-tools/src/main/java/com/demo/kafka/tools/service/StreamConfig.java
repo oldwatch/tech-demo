@@ -1,23 +1,15 @@
 package com.demo.kafka.tools.service;
 
-import java.util.Map;
+import com.demo.kafka.tools.helper.Utils;
 
-public record StreamConfig(String cmd, String service, String factory) implements Config {
+public record StreamConfig(String cmd, String service, String factory) {
 
 
-    public StreamConfig(Map<String, String> additions, String cmd) {
-        var service = additions.get("service");
-        if (service == null || service.isBlank()) {
-            service = "simple";
-        }
+    public StreamConfig(String command) {
+        var cmd = Utils.getSecondWord(command);
+        var service = Utils.getThirdWord(command);
         this(cmd, service, "&" + service);
     }
 
 
-    @Override
-    public String getDetail() {
-        return """
-                -------
-                """;
-    }
 }

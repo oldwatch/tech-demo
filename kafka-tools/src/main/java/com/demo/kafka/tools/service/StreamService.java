@@ -10,6 +10,7 @@ import org.springframework.kafka.config.StreamsBuilderFactoryBean;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 
 @Component
@@ -25,27 +26,30 @@ public class StreamService implements ApplicationContextAware {
 
     private <T> Optional<T> getBeanByPrefix(String service, Class<T> cls) {
         return Arrays.stream(applicationContext.getBeanNamesForType(cls))
-                .filter(n -> n.startsWith(service))
+                .filter(n -> n.toLowerCase(Locale.ENGLISH).startsWith(service))
                 .findFirst()
                 .map(name -> applicationContext.getBean(name, cls));
     }
 
-    public void doCommand(String param, StreamConfig config) {
+    public void start(StreamConfig config) {
 
         var factoryBean = getBeanByPrefix(config.factory(), StreamsBuilderFactoryBean.class).get();
+        factoryBean.start();
+    }
+
+
+    public void stop(StreamConfig config) {
+
+        var factoryBean = getBeanByPrefix(config.factory(), StreamsBuilderFactoryBean.class).get();
+        factoryBean.stop();
+    }
+
+    public void showTopology(StreamConfig config) {
+
         var builder = getBeanByPrefix(config.service(), StreamsBuilder.class).get();
-        switch (param) {
-            case "start" -> {
-                factoryBean.start();
-            }
-            case "stop" -> {
-                factoryBean.stop();
-            }
-            case "topology" -> {
-                var topology = builder.build();
-                log.info("===========topology===========\n {}", topology.describe());
-            }
-        }
+        var topology = builder.build();
+        
+        log.info("===========topology===========\n {}", topology.describe());
 
     }
 

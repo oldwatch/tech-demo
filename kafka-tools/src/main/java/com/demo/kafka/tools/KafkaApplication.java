@@ -1,6 +1,7 @@
 package com.demo.kafka.tools;
 
 import com.demo.kafka.tools.entity.DataEntity;
+import com.demo.kafka.tools.service.StreamProductFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.common.TopicPartition;
@@ -35,7 +36,6 @@ public class KafkaApplication {
 
         System.setProperty("timestamp", String.valueOf(System.currentTimeMillis() / 1000));
 
-//        SpringApplication.run(KafkaApplication.class, argv);
         var app = new SpringApplication(KafkaApplication.class);
         app.setWebApplicationType(WebApplicationType.NONE);
         app.run(argv);
@@ -57,11 +57,22 @@ public class KafkaApplication {
     }
 
     @Bean
+    public KafkaTemplate<String, DataEntity> sourceTemplate(ProducerFactory<String, DataEntity> productFactory) {
+        var template = new KafkaTemplate<>(productFactory);
+        template.setTransactionIdPrefix("tx-source-" + seed);
+        template.setDefaultTopic("test-stream-topic");
+
+        return template;
+    }
+
+
+    @Bean
     public KafkaTemplate<String, DataEntity> commonTemplate(ProducerFactory<String, DataEntity> productFactory, ConsumerFactory<String, DataEntity> consumerFactory) {
         var template = new KafkaTemplate<>(productFactory);
         template.setConsumerFactory(consumerFactory);
         template.setDefaultTopic("test-topic");
-//        template.setTransactionIdPrefix("tx-product-" + seed);
+        template.setTransactionIdPrefix("tx-common-" + seed);
+
         return template;
     }
 

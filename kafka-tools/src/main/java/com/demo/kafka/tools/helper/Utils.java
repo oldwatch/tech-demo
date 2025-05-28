@@ -6,9 +6,10 @@ import java.util.regex.Pattern;
 
 public class Utils {
 
-    private static final Pattern pattern = Pattern.compile("^(\\w+)");
-    private static final Pattern ptnName = Pattern.compile("^([A-Z]{1}[^A-Z]+)");
+    private static final Pattern word1st = Pattern.compile("^(\\w+)");
     private static final Pattern word2nd = Pattern.compile("^\\s?(\\S+)\\s+(\\S+)");
+
+    private static final Pattern ptnName = Pattern.compile("^([A-Z]{1}[^A-Z]+)");
     private static final Random random = new Random(System.currentTimeMillis());
     private static final Pattern ptnKeyword = Pattern.compile("^[^\\-]+\\-(\\.+)$");
 
@@ -18,6 +19,15 @@ public class Utils {
             return matcher.group(1);
         } else {
             return str;
+        }
+    }
+
+    public static String getStrValue(String str, String defaultVal) {
+
+        if (str != null && !str.isBlank()) {
+            return str;
+        } else {
+            return defaultVal;
         }
     }
 
@@ -44,7 +54,7 @@ public class Utils {
     }
 
     public static String getFirstWord(String str) {
-        var match = pattern.matcher(str);
+        var match = word1st.matcher(str);
         if (match.find()) {
             return match.group();
         } else {
@@ -52,10 +62,19 @@ public class Utils {
         }
     }
 
-    public static String getSecordWord(String str) {
+    public static String getSecondWord(String str) {
         var match = word2nd.matcher(str);
         if (match.find()) {
             return match.group(2);
+        } else {
+            return "";
+        }
+    }
+
+    public static String getThirdWord(String str) {
+        var array = str.split("\\s+");
+        if (array.length > 2) {
+            return array[2];
         } else {
             return "";
         }

@@ -29,6 +29,7 @@ public class KafkaManager {
     private final KafkaTemplate<String, DataEntity> template;
     private final Consumer<String, DataEntity> consumer;
     private final KafkaTemplate<String, DataEntity> storeProduct;
+    private final KafkaTemplate<String, DataEntity> sourceProduct;
     private final BiConsumer<? super SendResult<String, DataEntity>, ? super Throwable> callback = (result, exception) -> {
         if (exception == null) {
             log.info("send data: \n {}", result.getProducerRecord().value());
@@ -42,14 +43,22 @@ public class KafkaManager {
 
     public KafkaManager(@Qualifier("commonTemplate") KafkaTemplate<String, DataEntity> template,
                         Consumer<String, DataEntity> consumer,
-                        @Qualifier("storeTemplate") KafkaTemplate<String, DataEntity> storeProduct) {
+                        @Qualifier("storeTemplate") KafkaTemplate<String, DataEntity> storeProduct,
+                        @Qualifier("sourceTemplate") KafkaTemplate<String, DataEntity> sourceProduct) {
         this.template = template;
         this.consumer = consumer;
         this.storeProduct = storeProduct;
+        this.sourceProduct = sourceProduct;
     }
 
     public CompletableFuture<SendResult<String, DataEntity>> doSend(String key, DataEntity record) {
         var future = template.sendDefault(key, record);
+        future.whenCompleteAsync(callback);
+        return future;
+    }
+
+    public CompletableFuture<SendResult<String, DataEntity>> doStreamSend(String key, DataEntity record) {
+        var future = sourceProduct.sendDefault(key, record);
 
         future.whenCompleteAsync(callback);
         return future;
@@ -74,7 +83,7 @@ public class KafkaManager {
             var record = iter.next();
             var entity = record.value();
             if (entity.text().contains("error")) {
-                
+
                 throw new IllegalArgumentException();
             }
             var future = storeProduct.sendDefault("operate-" + record.offset(), entity);
