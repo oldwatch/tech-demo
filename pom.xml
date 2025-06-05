@@ -11,19 +11,19 @@
     <modules>
         <module>new-feature</module>
         <module>kafka-tools</module>
+        <!--        <module>influx-demo</module>-->
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
+        <version>3.5.0</version>
     </parent>
 
     <properties>
         <java.version>24</java.version>
         <skipTests>true</skipTests>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <!--        <lombok.version>1.18.38</lombok.version>-->
     </properties>
 
     <dependencies>

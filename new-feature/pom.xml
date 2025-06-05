@@ -10,11 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>new-feature</artifactId>
-    <build>
-        <plugins>
-        </plugins>
-    </build>
 
+    <properties>
+        <netty-handler.version>4.2.1.Final</netty-handler.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,10 +30,85 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.influxdb/influxdb3-java -->
+        <dependency>
+            <groupId>com.influxdb</groupId>
+            <artifactId>influxdb3-java</artifactId>
+            <version>1.1.0</version>
+            <!--            <exclusions>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.netty</groupId>-->
+            <!--                    <artifactId>netty-handler</artifactId>-->
+            <!--                </exclusion>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.netty</groupId>-->
+            <!--                    <artifactId>netty-buffer</artifactId>-->
+            <!--                </exclusion>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.netty</groupId>-->
+            <!--                    <artifactId>netty-codec</artifactId>-->
+            <!--                </exclusion>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.netty</groupId>-->
+            <!--                    <artifactId>netty-codec-http2</artifactId>-->
+            <!--                </exclusion>-->
+            <!--                <exclusion>-->
+            <!--                    <groupId>io.netty</groupId>-->
+            <!--                    <artifactId>netty-transport-native-unix-common</artifactId>-->
+            <!--                </exclusion>-->
+            <!--            </exclusions>-->
+        </dependency>
+
         <!--        <dependency>-->
-        <!--            <groupId>org.projectlombok</groupId>-->
-        <!--            <artifactId>lombok</artifactId>-->
-        <!--            <scope>provided</scope>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-handler</artifactId>-->
+        <!--            <version>${netty-handler.version}</version>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-buffer</artifactId>-->
+        <!--            <version>${netty-handler.version}</version>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-codec</artifactId>-->
+        <!--            <version>${netty-handler.version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>io.netty</groupId>-->
+        <!--                    <artifactId>netty-buffer</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-codec-http2</artifactId>-->
+        <!--            <version>${netty-handler.version}</version>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>io.netty</groupId>-->
+        <!--                    <artifactId>netty-codec</artifactId>-->
+        <!--                </exclusion>-->
+        <!--                <exclusion>-->
+        <!--                    <groupId>io.netty</groupId>-->
+        <!--                    <artifactId>netty-handler</artifactId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>io.netty</groupId>-->
+        <!--            <artifactId>netty-transport-native-unix-common</artifactId>-->
+        <!--            <version>${netty-handler.version}</version>-->
         <!--        </dependency>-->
 
         <dependency>
