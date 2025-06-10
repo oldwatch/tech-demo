@@ -11,7 +11,7 @@
     <modules>
         <module>new-feature</module>
         <module>kafka-tools</module>
-        <!--        <module>influx-demo</module>-->
+        <module>utils-demo</module>
     </modules>
 
     <parent>
