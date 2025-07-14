@@ -45,6 +45,7 @@ public class RecordUtils {
         return copy(source, targetClass, Map.of());
     }
 
+
     @SuppressWarnings("unchecked")
     public static <S extends Record, T extends Record> T copy(S source, Class<T> targetCls, Map<String, Object> extValues) {
 

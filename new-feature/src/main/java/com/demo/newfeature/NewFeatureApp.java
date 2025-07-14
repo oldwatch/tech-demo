@@ -2,7 +2,9 @@ package com.demo.newfeature;
 
 import com.demo.newfeature.helper.jackson.EntityIDJacksonModule;
 import com.demo.newfeature.helper.jackson.SealedClsJacksonModule;
+import com.demo.newfeature.web.helper.GRpcInterceptor;
 import com.demo.newfeature.web.helper.TokenFilter;
+import io.grpc.ServerInterceptor;
 import io.micrometer.meter.influx3.SpringInflux3Configuration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +13,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
+import org.springframework.grpc.server.GlobalServerInterceptor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
@@ -35,6 +39,13 @@ public class NewFeatureApp {
                 objectMapper.registerModule(module);
             });
         };
+    }
+
+    @GlobalServerInterceptor
+    @Bean
+    @Order(100)
+    public ServerInterceptor authInterceptor() {
+        return new GRpcInterceptor();
     }
 
     @Bean

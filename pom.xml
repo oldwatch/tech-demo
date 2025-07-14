@@ -12,6 +12,8 @@
         <module>new-feature</module>
         <module>kafka-tools</module>
         <module>utils-demo</module>
+        <module>spring-task</module>
+        <module>demo-grpc</module>
     </modules>
 
     <parent>

@@ -18,6 +18,9 @@ public final class DatetimeUtils {
     }
 
     public static Long getTimestamp(LocalDateTime date) {
+        if (date == null) {
+            return null;
+        }
         var zonedDateTime = date.atZone(ZoneId.of(TIME_ZONE));
         return zonedDateTime.toEpochSecond();
     }

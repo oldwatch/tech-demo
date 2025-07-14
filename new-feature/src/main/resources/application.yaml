@@ -1,6 +1,9 @@
 server:
   port: 8000
-spring:
+#spring:
+#  grpc:
+#    server:
+#      enable: true
 management:
   observations:
     annotations:
@@ -18,7 +21,7 @@ management:
     metrics:
       export:
         batch-size: 10000
-        enabled: true
+        enabled: false
         step: 10s
         uri: http://localhost:8181
         timeout: 1s

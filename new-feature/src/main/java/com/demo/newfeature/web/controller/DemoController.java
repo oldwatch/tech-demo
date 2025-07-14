@@ -45,7 +45,7 @@ public class DemoController {
     @PostMapping("/addEntry")
     public OneVO addEntry(@RequestBody AddOneReq req) {
 
-        var rec = req.generRec(store.getUserInfo());
+        var rec = new OneRec(req, store.getUserInfo());
         var result = management.addOneEntity(rec);
 
         return generVO(result);
@@ -66,7 +66,6 @@ public class DemoController {
     }
 
     private OneVO generVO(OneRec entity) {
-//        Map<String, Object> additions = Map.of("entityId", idEncodeTool.encode(entity.id()));
         return RecordUtils.copy(entity, OneVO.class);
     }
 

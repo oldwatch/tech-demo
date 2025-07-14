@@ -1,0 +1,4 @@
+insert into  T_ONE
+(NAME,SUBMIT_TIME,INT_VAL,DEC_VAL,CREATED_DATE,STATUS)
+values
+('demo',NOW(), 100,23.45,NOW(),'one');

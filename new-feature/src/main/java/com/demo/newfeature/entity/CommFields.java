@@ -17,7 +17,7 @@ public record CommFields(@Column("CREATED_DATE")
                          @Column("VERSION")
                          String version) {
 
-    public CommFields(String owner){
-        this(null,false,owner,null);
+    public CommFields(String owner) {
+        this(LocalDateTime.now(), false, owner, "0");
     }
 }

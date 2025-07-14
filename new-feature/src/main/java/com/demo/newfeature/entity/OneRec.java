@@ -1,5 +1,7 @@
 package com.demo.newfeature.entity;
 
+import com.demo.newfeature.web.grpc.proto.AddOneRequest;
+import com.demo.newfeature.web.vo.AddOneReq;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
@@ -28,6 +30,16 @@ public record OneRec(
         CommFields commFields
 
 ) {
+
+    public OneRec(AddOneReq req, String user) {
+        this(null, req.name(), null,
+                req.intValue(), req.decValue(), StatusType.RUN, new CommFields(user));
+    }
+
+    public OneRec(AddOneRequest req, String user) {
+        this(null, req.getName(), null,
+                req.getIntValue(), req.getDecValue(), StatusType.RUN, new CommFields(user));
+    }
 
 
 }
