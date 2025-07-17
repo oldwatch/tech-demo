@@ -2,13 +2,13 @@ package com.demo.newfeature.management;
 
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
-import com.demo.newfeature.helper.Optional2;
-import com.demo.newfeature.helper.RecordUtils;
 import com.demo.newfeature.repo.OneRepository;
+import org.demo.helper.Optional2;
+import org.demo.helper.Pager;
+import org.demo.helper.RecordUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -62,9 +62,9 @@ public class DemoManagement {
         };
     }
 
-    public record Pager(Integer limit, LocalDateTime lastLocal) {
-
-
-    }
+//    public record Pager(Integer limit, LocalDateTime lastLocal) {
+//
+//
+//    }
 
 }

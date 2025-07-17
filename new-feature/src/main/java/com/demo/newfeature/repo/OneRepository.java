@@ -2,7 +2,7 @@ package com.demo.newfeature.repo;
 
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
-import com.demo.newfeature.management.DemoManagement;
+import org.demo.helper.Pager;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -18,7 +18,7 @@ public interface OneRepository extends CrudRepository<OneRec, Integer> {
             select * from T_ONE 
             where NAME like :name and CREATED_DATE>:#{#pager.lastLocal} and IS_DELETED= false 
             order by CREATED_DATE desc limit :#{pager.limit} """)
-    List<OneRec> findByWildName(@Param("name") String query, DemoManagement.Pager page);
+    List<OneRec> findByWildName(@Param("name") String query, Pager page);
 
     @Query("""
             select * from T_ONE 

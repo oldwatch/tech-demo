@@ -11,12 +11,12 @@
 
     <artifactId>new-feature</artifactId>
 
-    <properties>
-        <!--        <netty-handler.version>4.2.1.Final</netty-handler.version>-->
-        <grpc.version>1.72.0</grpc.version>
-        <protobuf-java.version>4.30.2</protobuf-java.version>
-        <spring-grpc.version>0.9.0</spring-grpc.version>
-    </properties>
+    <!--    <properties>-->
+    <!--        &lt;!&ndash;        <netty-handler.version>4.2.1.Final</netty-handler.version>&ndash;&gt;-->
+    <!--        <grpc.version>1.72.0</grpc.version>-->
+    <!--        <protobuf-java.version>4.30.2</protobuf-java.version>-->
+    <!--        <spring-grpc.version>0.9.0</spring-grpc.version>-->
+    <!--    </properties>-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -42,6 +42,7 @@
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-services</artifactId>
+            <version>${grpc.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.influxdb/influxdb3-java -->
@@ -53,10 +54,12 @@
 
 
         <dependency>
-            <groupId>org.sqids</groupId>
-            <artifactId>sqids</artifactId>
-            <version>0.1.0</version>
+            <groupId>org.demo</groupId>
+            <artifactId>utils-demo</artifactId>
+            <version>${project.version}</version>
         </dependency>
+
+
     </dependencies>
 
     <dependencyManagement>

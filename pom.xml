@@ -13,7 +13,7 @@
         <module>kafka-tools</module>
         <module>utils-demo</module>
         <module>spring-task</module>
-        <module>demo-grpc</module>
+        <module>demo-reactive</module>
     </modules>
 
     <parent>
@@ -26,6 +26,9 @@
         <java.version>24</java.version>
         <skipTests>true</skipTests>
         <maven.deploy.skip>true</maven.deploy.skip>
+        <grpc.version>1.72.0</grpc.version>
+        <protobuf-java.version>4.30.2</protobuf-java.version>
+        <spring-grpc.version>0.9.0</spring-grpc.version>
     </properties>
 
     <dependencies>

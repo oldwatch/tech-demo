@@ -1,8 +1,6 @@
 package com.demo.newfeature.service;
 
 import com.demo.newfeature.entity.OneRec;
-import com.demo.newfeature.helper.DatetimeUtils;
-import com.demo.newfeature.helper.IdEncodeTool;
 import com.demo.newfeature.management.DemoManagement;
 import com.demo.newfeature.web.grpc.proto.AddOneRequest;
 import com.demo.newfeature.web.grpc.proto.OneVO;
@@ -10,6 +8,8 @@ import com.demo.newfeature.web.grpc.proto.SearchRequest;
 import com.demo.newfeature.web.grpc.proto.gRPCDemoGrpc;
 import com.demo.newfeature.web.helper.GRpcInterceptor;
 import io.grpc.Context;
+import org.demo.helper.DatetimeUtils;
+import org.demo.helper.IdEncodeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

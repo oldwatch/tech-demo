@@ -1,9 +1,9 @@
 package com.demo.newfeature.web.vo;
 
 import com.demo.newfeature.entity.OneRec;
-import com.demo.newfeature.helper.DatetimeUtils;
-import com.demo.newfeature.helper.IdEncodeTool;
-import com.demo.newfeature.management.DemoManagement;
+import org.demo.helper.DatetimeUtils;
+import org.demo.helper.IdEncodeTool;
+import org.demo.helper.Pager;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -17,7 +17,7 @@ public record RecList(List<OneVO> recList, String nextToken) {
                 .max(Comparator.comparing(e ->
                         e)
                 ).orElse(DatetimeUtils.getLocalTime(0));
-        var pager = new DemoManagement.Pager(pageSize, maxDate);
+        var pager = new Pager(pageSize, maxDate);
 
         var voList = recList.stream().map(e -> new OneVO(e)).toList();
         this(voList, idEncodeTool.encodePager(pager));

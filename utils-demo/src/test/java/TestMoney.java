@@ -51,7 +51,7 @@ public class TestMoney {
         var m2 = Money.of(5.55, rmb, context);
 
         var summary = m1.multiply(3.8).multiply(0.8).add(m2);
-
+        
         var format = MonetaryFormats.getAmountFormat(
                 AmountFormatQueryBuilder.of(Locale.CHINA).build());
 
