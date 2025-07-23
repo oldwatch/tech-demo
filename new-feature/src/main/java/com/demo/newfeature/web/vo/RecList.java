@@ -1,9 +1,9 @@
 package com.demo.newfeature.web.vo;
 
 import com.demo.newfeature.entity.OneRec;
-import org.demo.helper.DatetimeUtils;
-import org.demo.helper.IdEncodeTool;
-import org.demo.helper.Pager;
+import org.demo.idconvert.IdEncodeTool;
+import org.demo.idconvert.Pager;
+import org.demo.utils.DatetimeUtils;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;

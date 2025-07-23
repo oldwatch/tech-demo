@@ -1,7 +1,7 @@
 package com.demo.newfeature.web.vo;
 
 
-import org.demo.helper.jackson.EntityIDMask;
+import org.demo.idconvert.jackson.EntityIDMask;
 
 public record IdResp(
         @EntityIDMask

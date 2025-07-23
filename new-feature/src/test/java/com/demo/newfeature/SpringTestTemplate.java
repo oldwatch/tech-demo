@@ -2,8 +2,8 @@ package com.demo.newfeature;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.demo.helper.IdEncodeTool;
-import org.demo.helper.jackson.EntityIDMask;
+import org.demo.idconvert.IdEncodeTool;
+import org.demo.idconvert.jackson.EntityIDMask;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

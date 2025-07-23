@@ -3,9 +3,9 @@ package com.demo.newfeature.management;
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
 import com.demo.newfeature.repo.OneRepository;
-import org.demo.helper.Optional2;
-import org.demo.helper.Pager;
-import org.demo.helper.RecordUtils;
+import org.demo.idconvert.Pager;
+import org.demo.utils.Optional2;
+import org.demo.utils.RecordUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

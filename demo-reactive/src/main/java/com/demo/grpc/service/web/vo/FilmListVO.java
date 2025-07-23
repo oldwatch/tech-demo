@@ -1,7 +1,7 @@
 package com.demo.grpc.service.web.vo;
 
 import com.demo.grpc.service.entity.FilmList;
-import org.demo.helper.jackson.EntityIDMask;
+import org.demo.idconvert.jackson.EntityIDMask;
 import org.demo.money.MoneyTool;
 import org.springframework.util.StringUtils;
 

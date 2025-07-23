@@ -1,7 +1,7 @@
 package utils;
 
 
-import org.demo.helper.RecordUtils;
+import org.demo.utils.RecordUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;

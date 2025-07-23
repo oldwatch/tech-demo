@@ -14,6 +14,9 @@
         <module>utils-demo</module>
         <module>spring-task</module>
         <module>demo-reactive</module>
+        <module>dubbo-service</module>
+        <module>service-api</module>
+        <module>dubbo-client</module>
     </modules>
 
     <parent>
@@ -26,9 +29,7 @@
         <java.version>24</java.version>
         <skipTests>true</skipTests>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <grpc.version>1.72.0</grpc.version>
-        <protobuf-java.version>4.30.2</protobuf-java.version>
-        <spring-grpc.version>0.9.0</spring-grpc.version>
+        <spring.version>3.5.0</spring.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,19 @@
         </plugins>
     </build>
 
+
+    <!--    <dependencyManagement>-->
+    <!--        <dependencies>-->
+    <!--            &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies &ndash;&gt;-->
+    <!--            <dependency>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-dependencies</artifactId>-->
+    <!--                <version>${spring.version}</version>-->
+    <!--                <type>pom</type>-->
+    <!--                <scope>import</scope>-->
+    <!--            </dependency>-->
+    <!--        </dependencies>-->
+    <!--    </dependencyManagement>-->
     <!--    <pluginRepositories>-->
     <!--        <pluginRepository>-->
     <!--            <id>spring-snapshots</id>-->

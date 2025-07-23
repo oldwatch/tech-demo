@@ -3,7 +3,7 @@ package com.demo.newfeature.web.vo;
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.demo.helper.jackson.EntityIDMask;
+import org.demo.idconvert.jackson.EntityIDMask;
 
 import java.time.LocalDateTime;
 

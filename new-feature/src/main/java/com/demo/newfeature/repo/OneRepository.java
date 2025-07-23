@@ -2,7 +2,7 @@ package com.demo.newfeature.repo;
 
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
-import org.demo.helper.Pager;
+import org.demo.idconvert.Pager;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

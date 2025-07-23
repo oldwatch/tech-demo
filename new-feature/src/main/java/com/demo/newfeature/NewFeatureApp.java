@@ -4,13 +4,9 @@ import com.demo.newfeature.web.helper.GRpcInterceptor;
 import com.demo.newfeature.web.helper.TokenFilter;
 import io.grpc.ServerInterceptor;
 import io.micrometer.meter.influx3.SpringInflux3Configuration;
-import org.demo.helper.IdEncodeTool;
-import org.demo.helper.jackson.EntityIDJacksonModule;
-import org.demo.helper.jackson.SealedClsJacksonModule;
+import org.demo.idconvert.HelperFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -19,9 +15,8 @@ import org.springframework.grpc.server.GlobalServerInterceptor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@EnableConfigurationProperties(ConfigProp.class)
 @SpringBootApplication
-@Import(SpringInflux3Configuration.class)
+@Import({SpringInflux3Configuration.class, HelperFactory.class})
 public class NewFeatureApp {
 
     public static void main(String[] argv) {
@@ -32,27 +27,27 @@ public class NewFeatureApp {
 
     //    @Bean
 //    public En
-    @Bean
-    public IdEncodeTool idEncodeTool(ConfigProp prop) {
-        return new IdEncodeTool(prop.sqIdMask());
-    }
+//    @Bean
+//    public IdEncodeTool idEncodeTool(ConfigProp prop) {
+//        return new IdEncodeTool(prop.sqIdMask());
+//    }
+//
+//    @Bean
+//    public EntityIDJacksonModule entityIDJacksonModule(IdEncodeTool encodeTool) {
+//        return new EntityIDJacksonModule(encodeTool);
+//    }
 
-    @Bean
-    public EntityIDJacksonModule entityIDJacksonModule(IdEncodeTool encodeTool) {
-        return new EntityIDJacksonModule(encodeTool);
-    }
-
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer(EntityIDJacksonModule module) {
-        return builder -> {
-            builder.postConfigurer(objectMapper -> {
-                // Customize the ObjectMapper here
-
-                objectMapper.registerModule(new SealedClsJacksonModule());
-                objectMapper.registerModule(module);
-            });
-        };
-    }
+//    @Bean
+//    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer(EntityIDJacksonModule module) {
+//        return builder -> {
+//            builder.postConfigurer(objectMapper -> {
+//                // Customize the ObjectMapper here
+//
+//                objectMapper.registerModule(new SealedClsJacksonModule());
+//                objectMapper.registerModule(module);
+//            });
+//        };
+//    }
 
     @GlobalServerInterceptor
     @Bean

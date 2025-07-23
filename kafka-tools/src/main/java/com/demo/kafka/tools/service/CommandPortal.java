@@ -12,9 +12,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Locale;
 
 
 @Component
@@ -39,15 +37,6 @@ public class CommandPortal implements CommandLineRunner, ApplicationContextAware
         this.streamService = streamService;
         this.storeService = storeService;
         this.sourceService = sourceService;
-    }
-
-    private static String getCleanInput(BufferedReader reader) throws IOException {
-        var input = reader.readLine();
-        if (input == null || input.isBlank()) {
-            return null;
-        }
-        input = input.trim().toLowerCase(Locale.ENGLISH);
-        return input;
     }
 
 

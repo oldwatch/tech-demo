@@ -1,8 +1,8 @@
 package com.demo.grpc.service;
 
-import org.demo.helper.IdEncodeTool;
-import org.demo.helper.jackson.EntityIDJacksonModule;
-import org.demo.helper.jackson.SealedClsJacksonModule;
+import org.demo.idconvert.IdEncodeTool;
+import org.demo.idconvert.jackson.EntityIDJacksonModule;
+import org.demo.idconvert.jackson.SealedClsJacksonModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class ReactiveApplication {
 
     public static void main(String[] argv) {
-        
+
         SpringApplication.run(ReactiveApplication.class, argv);
 
     }
