@@ -7,21 +7,22 @@ spring:
     username: test
     password: test_pwd
     driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    org.apache.dubbo.rpc.protocol.tri: debug
+    org.apache.dubbo.remoting: debug
 dubbo:
-  registry:
-    address: 'nacos://localhost:8848?username=api_client&password=583R3hH_jLH2y_A'
-    register-mode: instance
-  protocol:
-    name: tri
-    port: 50051
   config-center:
     group: demo
     address: 'nacos://localhost:8848?username=api_client&password=583R3hH_jLH2y_A'
     app-config-file: dubbo-app.properties # optional
+    config-file: dubbo-env.properties
+  #  protocol:
+  #    name: tri
+  #    port: 20800
+  #    triple:
+  #      verbose: true
+  #    config-file: dubbo-env.properties
   application:
     name: DemoDubboService
     logger: slf4j
-#com:
-#  demo:
-#    id-convert:
-#      sqIdMask: xAVPufY5aUmkSQDwdpB63XsLGMq2chvFjH8yE7T1rIigzl0ob4WROK9JZNCtne
