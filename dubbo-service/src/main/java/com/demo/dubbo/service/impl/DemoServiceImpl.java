@@ -1,6 +1,7 @@
 package com.demo.dubbo.service.impl;
 
 import com.demo.dubbo.service.DemoService;
+import com.demo.dubbo.service.DemoServiceException;
 import com.demo.dubbo.service.entity.DemoEntity;
 import com.demo.dubbo.service.entity.DemoInput;
 import com.demo.dubbo.service.entity.Pager;
@@ -27,6 +28,10 @@ public class DemoServiceImpl implements DemoService {
 
     @Override
     public DemoEntity addData(DemoInput input) {
+
+        if (input.name().contains("err")) {
+            throw new DemoServiceException(new IllegalArgumentException("invalid name"));
+        }
         String id = tool.encode(seq.incrementAndGet());
         var entity = new DemoEntity(input, id, "test");
         dataMap.put(entity.etityId(), entity);

@@ -13,16 +13,16 @@ import java.util.List;
 public interface DemoService {
 
     @Mapping(enabled = false)
-    DemoEntity addData(DemoInput input);
+    DemoEntity addData(DemoInput input) throws DemoServiceException;
 
 
     @Mapping(path = "/all", method = HttpMethods.GET)
-    List<DemoEntity> getDataListByPage(Pager pager);
+    List<DemoEntity> getDataListByPage(Pager pager) throws DemoServiceException;
 
     @Mapping(enabled = false)
-    DemoEntity updateData(String id, DemoInput input);
+    DemoEntity updateData(String id, DemoInput input) throws DemoServiceException;
 
     @Mapping(path = "/id/{id}", method = HttpMethods.GET)
-    DemoEntity queryByID(@Param(type = ParamType.PathVariable) String id);
+    DemoEntity queryByID(@Param(type = ParamType.PathVariable) String id) throws DemoServiceException;
 
 }
