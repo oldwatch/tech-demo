@@ -25,30 +25,6 @@ public class NewFeatureApp {
 
     }
 
-    //    @Bean
-//    public En
-//    @Bean
-//    public IdEncodeTool idEncodeTool(ConfigProp prop) {
-//        return new IdEncodeTool(prop.sqIdMask());
-//    }
-//
-//    @Bean
-//    public EntityIDJacksonModule entityIDJacksonModule(IdEncodeTool encodeTool) {
-//        return new EntityIDJacksonModule(encodeTool);
-//    }
-
-//    @Bean
-//    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer(EntityIDJacksonModule module) {
-//        return builder -> {
-//            builder.postConfigurer(objectMapper -> {
-//                // Customize the ObjectMapper here
-//
-//                objectMapper.registerModule(new SealedClsJacksonModule());
-//                objectMapper.registerModule(module);
-//            });
-//        };
-//    }
-
     @GlobalServerInterceptor
     @Bean
     @Order(100)

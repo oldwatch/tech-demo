@@ -1,20 +1,22 @@
-package org.demo.wechat;
+package org.demo.wechat.aop;
 
+import org.demo.wechat.TokenStore;
+import org.demo.wechat.WeChatApiAuth;
+import org.demo.wechat.WeChatTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.web.client.RestTemplate;
 
-@EnableRetry
+
 @EnableConfigurationProperties(WeChatApiAuth.class)
-public class WeChatApiConfig {
+public class ApiLoaderConfig {
 
-    private final Logger log = LoggerFactory.getLogger(WeChatApiConfig.class);
 
+    private final Logger log = LoggerFactory.getLogger(ApiLoaderConfig.class);
 
     @Bean
     public RestTemplate restTemplate() {
@@ -22,12 +24,13 @@ public class WeChatApiConfig {
         var template = new RestTemplate();
         var factory = new HttpComponentsClientHttpRequestFactory();
         template.setRequestFactory(new BufferingClientHttpRequestFactory(factory));
+
         return template;
     }
 
     @Bean
     public WeChatTokenService weChatTokenService(RestTemplate template, WeChatApiAuth auth) {
-        return new WeChatTokenService(restTemplate(), auth);
+        return new WeChatTokenService(template, auth);
     }
 
     @Bean
@@ -35,8 +38,10 @@ public class WeChatApiConfig {
         return new TokenStore(service);
     }
 
+    //    @DependsOn({"tokenStore", "restTemplate"})
     @Bean
-    public WeChatBusinessService weChatBusinessService(TokenStore store, RestTemplate template) {
-        return new WeChatBusinessService(store, template);
+    public BeanFactoryPostProcessForService getPostProcess(TokenStore store, RestTemplate template) {
+        return new BeanFactoryPostProcessForService(store, template);
     }
+
 }

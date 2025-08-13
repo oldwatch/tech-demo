@@ -3,7 +3,6 @@ package org.demo.wechat;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -11,7 +10,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
-public class TokenStore implements InitializingBean {
+public class TokenStore {
 
     private final AtomicReference<String> tokenStore = new AtomicReference<>();
 
@@ -26,10 +25,6 @@ public class TokenStore implements InitializingBean {
         this.service = service;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        fillToken();
-    }
 
     private void fillToken() {
 
@@ -41,9 +36,14 @@ public class TokenStore implements InitializingBean {
             }
             var token = service.bindToken();
             tokenStore.set(token.accessToken);
-            countDown.set(System.currentTimeMillis() + (long) (token.expiresIn * 0.75));
+            countDown.set(System.currentTimeMillis() + (long) (token.expiresIn * 0.75 * 1000));
         }
 
+    }
+
+    public void settingToken(String token) {
+        tokenStore.set(token);
+        countDown.set(System.currentTimeMillis() + 7200 * 1000);
     }
 
     public String getCurrentToken() {
@@ -66,6 +66,10 @@ public class TokenStore implements InitializingBean {
             Long expiresIn,
             @JsonUnwrapped ErrorInfo err
     ) {
+
+        public WechatToken() {
+            this("_mock_", 7200l, null);
+        }
 
     }
 

@@ -3,15 +3,21 @@ package org.demo.wechat;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
+import java.util.List;
 
 public class WeChatBusinessService {
-    private static final String hostPrimate = "https://api.weixin.qq.com";
-    private static final String hostSecond = "https://api2.weixin.qq.com";
+
+    private static final String hostPrimate = "api.weixin.qq.com";
+    private static final String hostSecond = "api2.weixin.qq.com";
     private static final String prefix = "/cgi-bin";
     private static final String businessPath = "/get_api_domain_ip";
+    private static final String queryDomainPath = "/wxa/getwxadevinfo";
+    private final Logger log = LoggerFactory.getLogger(WeChatTokenService.class);
     private final TokenStore store;
     private final RestTemplate template;
 
@@ -21,17 +27,63 @@ public class WeChatBusinessService {
     }
 
     public IpList getIpList() {
-        var params = new HashMap<>();
-        params.put("access_token", store.getCurrentToken());
-        var resp = template.getForEntity(prefix + businessPath, IpList.class, params);
-        return resp.getBody();
+
+        var url = UriComponentsBuilder.newInstance()
+                .scheme("https").host(hostPrimate).pathSegment(prefix, businessPath).queryParam("access_token", store.getCurrentToken()).build();
+
+        return template.getForObject(url.toUriString(), IpList.class);
+
+    }
+
+
+    public DomainQueryResult queryBizDomainInfo() {
+
+        var url = UriComponentsBuilder.newInstance()
+                .scheme("https").host(hostPrimate).pathSegment(queryDomainPath).queryParam("access_token", store.getCurrentToken()).build();
+
+        var input = new DomainQueryInput("getbizdomain");
+        return template.postForObject(url.toUriString(), input, DomainQueryResult.class);
 
     }
 
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public record IpList(String[] ipList,
+    public record IpList(List<String> ipList,
                          @JsonUnwrapped ErrorInfo err) {
 
     }
+
+    public record DomainQueryInput(String action) {
+    }
+
+    @JsonNaming(PropertyNamingStrategies.LowerCaseStrategy.class)
+    public record DomainQueryResult(List<String> requestDomain,
+                                    List<String> wsRequestDomain,
+                                    List<String> uploadDomain,
+                                    List<String> downloadDomain,
+                                    List<String> udpDomain,
+                                    @JsonUnwrapped ErrorInfo err) {
+
+    }
+
+    /*
+
+{
+  "errcode": 0,
+  "errmsg": "ok",
+  "requestdomain": [
+      "https://www.example.com"
+  ],
+  "wsrequestdomain": [
+      "wss://www.qq.com"
+  ],
+  "uploaddomain": [],
+  "downloaddomain": [
+      "https://www.qq.com"
+  ],
+  "udpdomain": [
+      "udp://www.example.com"
+  ]
+}
+     */
 
 }
