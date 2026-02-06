@@ -1,9 +1,9 @@
 package com.demo.newfeature.management;
 
+import module id.encoder;
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
 import com.demo.newfeature.repo.OneRepository;
-import org.demo.idconvert.Pager;
 import org.demo.utils.Optional2;
 import org.demo.utils.RecordUtils;
 import org.springframework.stereotype.Service;

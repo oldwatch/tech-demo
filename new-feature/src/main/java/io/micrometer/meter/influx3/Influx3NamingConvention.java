@@ -1,10 +1,13 @@
 package io.micrometer.meter.influx3;
 
-import io.micrometer.common.lang.Nullable;
-import io.micrometer.core.instrument.Meter;
-import io.micrometer.core.instrument.config.NamingConvention;
+import module java.base;
+import module micrometer.commons;
+import module micrometer.core;
+import org.jspecify.annotations.Nullable;
+//import io.micrometer.core.instrument.Meter;
+//import io.micrometer.core.instrument.config.NamingConvention;
 
-import java.util.regex.Pattern;
+//import java.util.regex.Pattern;
 
 public class Influx3NamingConvention implements NamingConvention {
     private static final Pattern PATTERN_SPECIAL_CHARACTERS = Pattern.compile("([, \\.=\"])");

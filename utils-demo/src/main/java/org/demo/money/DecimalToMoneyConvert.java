@@ -1,15 +1,16 @@
 package org.demo.money;
 
-import org.javamoney.moneta.Money;
+import module java.base;
+import module org.javamoney.moneta;
+import module spring.data.commons;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.convert.ReadingConverter;
-
-import java.math.BigDecimal;
+import org.springframework.core.convert.converter.ConverterFactory;
 
 @ReadingConverter
-public class DecimalToMoneyConvert implements Converter<BigDecimal, Money> {
+public class DecimalToMoneyConvert implements ConverterFactory<BigDecimal, Money> {
+
     @Override
-    public Money convert(BigDecimal source) {
-        return Money.of(source, MoneyTool.rmb);
+    public <T extends Money> Converter<BigDecimal, ? extends T> getConverter(Class<T> targetType) {
+        return (source -> (T) Money.of(source, MoneyTool.rmb));
     }
 }

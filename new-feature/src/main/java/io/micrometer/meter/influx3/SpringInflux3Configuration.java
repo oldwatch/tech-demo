@@ -1,8 +1,10 @@
 package io.micrometer.meter.influx3;
 
-import org.springframework.boot.actuate.autoconfigure.metrics.export.ConditionalOnEnabledMetricsExport;
+
+import module spring.boot.autoconfigure;
+import module spring.context;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.micrometer.metrics.autoconfigure.export.ConditionalOnEnabledMetricsExport;
 
 @EnableConfigurationProperties(SpringInflux3Properties.class)
 @ConditionalOnEnabledMetricsExport("influx3")

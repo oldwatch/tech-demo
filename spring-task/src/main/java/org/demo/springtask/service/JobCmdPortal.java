@@ -1,22 +1,12 @@
 package org.demo.springtask.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.BeansException;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Locale;
+import module java.base;
+import module org.slf4j;
+import module spring.batch.core;
+import module spring.beans;
+import module spring.boot;
+import module spring.context;
+import module spring.core;
 
 @Component
 public class JobCmdPortal implements CommandLineRunner, ApplicationContextAware {

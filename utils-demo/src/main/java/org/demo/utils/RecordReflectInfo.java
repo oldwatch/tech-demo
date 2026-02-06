@@ -1,13 +1,7 @@
 package org.demo.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.RecordComponent;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import module java.base;
+import module org.slf4j;
 
 
 public record RecordReflectInfo(Constructor<?> constructor, Map<String, RecordComponent> methodMap) {

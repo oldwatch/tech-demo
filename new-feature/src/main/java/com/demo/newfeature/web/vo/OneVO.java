@@ -1,9 +1,9 @@
 package com.demo.newfeature.web.vo;
 
+import module id.encoder;
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.demo.idconvert.jackson.EntityIDMask;
 
 import java.time.LocalDateTime;
 

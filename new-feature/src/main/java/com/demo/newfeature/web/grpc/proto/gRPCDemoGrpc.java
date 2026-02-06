@@ -238,8 +238,8 @@ public final class gRPCDemoGrpc {
      * Sends a greeting
      * </pre>
      */
-    public com.demo.newfeature.web.grpc.proto.OneVO addEntry(com.demo.newfeature.web.grpc.proto.AddOneRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+    public com.demo.newfeature.web.grpc.proto.OneVO addEntry(com.demo.newfeature.web.grpc.proto.AddOneRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
           getChannel(), getAddEntryMethod(), getCallOptions(), request);
     }
 

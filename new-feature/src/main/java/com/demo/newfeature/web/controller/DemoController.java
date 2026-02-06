@@ -1,5 +1,9 @@
 package com.demo.newfeature.web.controller;
 
+import module demo.utils;
+import module id.encoder;
+import module java.base;
+import module spring.web;
 import com.demo.newfeature.entity.OneRec;
 import com.demo.newfeature.entity.StatusType;
 import com.demo.newfeature.management.DemoManagement;
@@ -7,22 +11,6 @@ import com.demo.newfeature.web.helper.AuthInfoStore;
 import com.demo.newfeature.web.vo.AddOneReq;
 import com.demo.newfeature.web.vo.OneVO;
 import com.demo.newfeature.web.vo.RecList;
-import org.demo.idconvert.IdEncodeTool;
-import org.demo.utils.Optional2;
-import org.demo.utils.RecordUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Map;
 
 @RequestMapping("/demo")
 @RestController

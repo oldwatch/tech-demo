@@ -1,13 +1,8 @@
 package org.demo.money;
 
-import org.javamoney.moneta.Money;
 
-import javax.money.CurrencyUnit;
-import javax.money.Monetary;
-import javax.money.format.AmountFormatQueryBuilder;
-import javax.money.format.MonetaryAmountFormat;
-import javax.money.format.MonetaryFormats;
-import java.util.Locale;
+import module java.base;
+import module org.javamoney.moneta;
 
 public class MoneyTool {
 

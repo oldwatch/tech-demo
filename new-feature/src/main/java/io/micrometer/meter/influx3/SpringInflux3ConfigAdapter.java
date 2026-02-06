@@ -1,8 +1,7 @@
 package io.micrometer.meter.influx3;
 
-import org.springframework.boot.actuate.autoconfigure.metrics.export.properties.StepRegistryPropertiesConfigAdapter;
-
-import java.time.Duration;
+import module java.base;
+import org.springframework.boot.micrometer.metrics.autoconfigure.export.properties.StepRegistryPropertiesConfigAdapter;
 
 public class SpringInflux3ConfigAdapter extends StepRegistryPropertiesConfigAdapter<SpringInflux3Properties> implements Influx3Config {
 

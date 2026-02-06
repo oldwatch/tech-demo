@@ -17,19 +17,21 @@
         <module>dubbo-service</module>
         <module>service-api</module>
         <module>dubbo-client</module>
+        <module>id-encoder</module>
+        <module>wechat-adapter</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.0</version>
+        <version>4.0.2</version>
     </parent>
 
     <properties>
-        <java.version>24</java.version>
+        <java.version>25</java.version>
         <skipTests>true</skipTests>
         <maven.deploy.skip>true</maven.deploy.skip>
-        <spring.version>3.5.0</spring.version>
+        <spring.version>4.0.2</spring.version>
     </properties>
 
     <dependencies>

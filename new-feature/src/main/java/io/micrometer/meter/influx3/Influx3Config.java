@@ -1,11 +1,8 @@
 package io.micrometer.meter.influx3;
 
+import module micrometer.core;
 import com.influxdb.v3.client.config.ClientConfig;
 import com.influxdb.v3.client.write.WritePrecision;
-import io.micrometer.core.instrument.config.MeterRegistryConfigValidator;
-import io.micrometer.core.instrument.config.validate.PropertyValidator;
-import io.micrometer.core.instrument.config.validate.Validated;
-import io.micrometer.core.instrument.step.StepRegistryConfig;
 
 import javax.annotation.Nonnull;
 import java.time.Duration;
@@ -54,7 +51,7 @@ public interface Influx3Config extends StepRegistryConfig {
 
 
     @Nonnull
-    default Validated<?> validate() {
+    default io.micrometer.core.instrument.config.validate.Validated validate() {
         return MeterRegistryConfigValidator.checkAll(this, (c) -> StepRegistryConfig.validate(c),
                 MeterRegistryConfigValidator.checkRequired("db", Influx3Config::db),
                 MeterRegistryConfigValidator.checkRequired("token", Influx3Config::token),
